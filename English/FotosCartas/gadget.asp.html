@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TwitterGadget: Twitter Client</title>
+<link rel="stylesheet" type="text/css" href="gadget.448.css" />
+<style type="text/css">
+body { background:#FFFFFF url(/images/back_swirls2.png) fixed no-repeat top left; }
+.tt1 { background-color:#FFFFFF; }
+.tt2 { background-color:#E7E7E7; }
+.tt3 { background-color:#F9FAAE; }
+.tf1 { color:#000000; }
+.tf2 { color:#000000; }
+.tf3 { color:#000000; }
+.tf1 a, .tf1 a:link, .tf1 a:visited, .tf1 a:active, .tf1 a:hover { color:#33AAFF; }
+.tf2 a, .tf2 a:link, .tf2 a:visited, .tf2 a:active, .tf2 a:hover { color:#33AAFF; }
+.tf3 a, .tf3 a:link, .tf3 a:visited, .tf3 a:active, .tf3 a:hover { color:#33AAFF; }
+</style>
+<script type="text/javascript" src="jquery-1.2.6.448.js"></script>
+<script type="text/javascript" src="jquery.hotkeys.448.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+</head>
+<body onresize="getMyWidth();">
+<div style="display:none;">
+<!-- 'advanced' must be 1st form -->
+<form method="post" name="advanced" action="gadget.asp?scrm=9tXRH">
+<input type=hidden name=adv value=1>
+<input type="hidden" name="ghide" value="">
+<input id=ht0 type="hidden" name="tab" value="1">
+<input type="hidden" name="ac" value="PDC21">
+</form>
+</div>
+<a name="top"></a>
+<div id="message" name="message" class="message" style="display:none;"><img src=/images/loading3.gif></div>
+<div id="settings" name="settings" class="settings" style="display:none; height:218px; width:250px; z-index:1000;">
+<form method="post" name="mySettings" action="gadget.asp?scrm=9tXRH">
+<table align=center>
+<tr><td class=text align=right>Show Thumbnail:</td><td class=text align=left><select name="photo" class=select><option value="">Yes</option><option value="1"> No</option></select></td></tr>
+<tr><td class=text align=right>Show Timestamp:</td><td class=text align=left><select name="stamp" class=select><option value="">Yes</option><option value="1">No</option></select></td></tr>
+<tr><td class=text align=right>Show Source:</td><td class=text align=left><select name="source" class=select><option value="">Yes</option><option value="1">No</option></select></td></tr>
+<tr><td class=text align=right>Refresh Rate:</td><td class=text align=left><select name="refresh" class=select><option value="3" selected>3 min</option><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="0">Manual</option></select></td></tr>
+<tr><td class=text align=right>Gadget Size:</td><td class=text align=left><select name="tsize" class=select><option value="">Default</option><option value="1">Small</option><option value="2">Tiny</option></select></td></tr>
+<tr><td class=text align=right>Gadget Height:</td><td class=text align=left><select name="theight" class=select><option value="300">300px</option><option value="">400px</option><option value="500">500px</option><option value="750" selected>750px</option><option value="1000">1000px</option><option value="-1">AutoFit</option></select></td></tr>
+<tr><td class=text align=right>Submit on Enter:</td><td class=text align=left><select name="nsone" class=select><option value="">Yes</option><option value="1">No</option></select></td></tr>
+<tr><td colspan=2 align=center id=advtxt><a href="#" onclick="return mng();">Advanced Options</a></td></tr>
+<tr><td colspan=2 align=center><input class=button type=submit value="save">&nbsp;<input class=button type=button onclick="slide('settings','email');" value="close"></td></tr>
+</table>
+<input type="hidden" name="settings" value="1">
+<input type="hidden" name="ghide" value="">
+<input id=ht1 type="hidden" name="tab" value="1">
+<input type="hidden" name="ac" value="PDC21">
+</form>
+</div>
+<div id="email" class="email" style="display:none; height:170px; width:250px; z-index:1000;">
+<form method="post" action="gadget.asp?scrm=9tXRH">
+<table align=center width="95%" border=0>
+<tr><td align=left class=text>Your Email:</td><td valign=bottom align=right><a href="/keyboard_shortcuts.php" title="Help" target="_blank"><img src=/images/help.png border=0></a></td></tr>
+<tr><td colspan=2 align=left class=text><input class=text type=text name="user_email" size=10></td></tr>
+<tr><td colspan=2 align=left class=text>Feedback:</td></tr>
+<tr><td colspan=2 align=left class=text><textarea name=feedback wrap=hard></textarea></td></tr>
+<tr><td colspan=2 align=center valign=middle><br><input class=button type=submit value="send">&nbsp;<input class=button type=button onclick="slide('email','settings');" value="close"></td></tr>
+</table>
+<input type="hidden" name="ghide" value="">
+<input type="hidden" name="email" value="1">
+<input id=ht2 type="hidden" name="tab" value="1">
+<input type="hidden" name="ac" value="PDC21">
+</form>
+</div>
+<div id="myinfo" class="myinfo" style="display:none; z-index:1000;">
+<table border=0 align=left>
+<tr><td align=right>Latest:</td><td width="100%">@skyeriquelme test</td></tr>
+<tr><td align=right>Followers:</td><td><a class=mystats title="View List of People Following You" alt="View List of People Following You" href="javascript:void(0);" onclick="myStats('','10','');">8</a></td></tr>
+<tr><td align=right>Following:</td><td><a class=mystats title="View List of People you are Following" alt="View List of People you are Following" href="javascript:void(0);" onclick="myStats('','9','');">0</a></td></tr>
+<tr><td align=right>Updates:</td><td><a class=mystats title="View Archive" alt="View Archive" href="javascript:void(0);" onclick="myStats('','8','PDC21');">2</a></td></tr>
+<tr><td align=right>Sent DMs:</td><td><a class=mystats title="View Sent Direct Messages" alt="View Sent Direct Messages" href="javascript:void(0);" onclick="myStats('','11','');">View</a></td></tr>
+<tr><td align=right>Refreshed:</td><td>15-Oct-2009 10:53:52 AM (<a class=mystats title="refresh data" alt="refresh data" target="_self" href="gadget.asp?stats=1&scrm=9tXRH&ghide=">update</a>)&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showme();"><img border=0 src=/images/close.gif></a></td></tr>
+</table>
+</div>
+<div id=translate class=translate style="display:none; z-index:1000;"></div>
+<div id="msg" class="msg" style="display:none;">
+<form method="post" action="gadget.asp?scrm=9tXRH">
+<div id="notify" class="notify"><img valign=top src=/images/info.png></div>
+New: Access Twitter trending topics &amp; saved searches directly within TwitterGadget. <a href="http://trunc.it/1kri5" target="_blank" class=user>View our demonstration</a>.<wbr> <a href="javascript:void(0);" onclick="userQ('tgadget','');" class=user>Follow Us</a>. 
+<br>
+<div style="float:right;"><input type=image src=/images/close.gif></div>
+<input type=hidden name=pop value=1>
+<input type="hidden" name="ghide" value="">
+<input type="hidden" name="ac" value="PDC21">
+</form>
+</div>
+<div id="minimenu" class="minimenu" style="display:none; height:30px; width:83px; position:fixed; left:5px; top:23px;">
+<map name=minimap>
+<area target="_self" href="gadget.asp?dc=1&scrm=9tXRH&ghide=" alt="Logout" title="Logout" shape="rect" coords="1,1,21,29">
+<area href="javascript:void(0);" onclick="slide('settings','email');" alt="Settings" title="Settings" shape="rect" coords="21,1,42,29">
+<area href="javascript:void(0);" onclick="slide('email','settings');" alt="Feedback" title="Feedback" shape="rect" coords="42,1,63,29">
+<area href="javascript:void(0);" onclick="document.getElementById('minimenu').style.display='none';" alt="Close" title="Close" shape="rect" coords="63,10,79,20">
+</map>
+<img src=/images/minimenu2.png usemap="#minimap" border=0>
+</div>
+<div class=searchoptions id=searchoptions>
+ <a href="javascript:void(0);" title="Search Twitter" onclick="tsearch('','');">SEARCH</a> <span>|</span>
+ <a href="javascript:void(0);" title="Translate" onclick="translate();">TRANSLATE</a> 
+</div>
+<div class=showshort id=showshort>
+ <a href="javascript:void(0);" title="Shorten URL" onclick="shorten();">SHORTEN</a>
+</div>
+<form name=myForm method=post action="gadget.asp?scrm=9tXRH">
+<div id=topbar>
+<table align=center border=0 width="100%" cellpadding=0 cellspacing=0>
+<tr>
+<td align=left style="padding-left:10px;" nowrap valign=middle><span class=username title="ctrl+m for more information">PDC21</span>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:processAJAX('gadget.asp','mycontent','1','','','');" title="Manual Refresh (ctrl+z)"><img id=rfsh border=0 src=/images/refresh.png></a>&nbsp;&nbsp;</td>
+<td align="right" valign=top nowrap><a class=topbutton target="_self" href="gadget.asp?dc=1&scrm=9tXRH&ghide=" title="Logout"><img class="thumb" src=/images/2_logout.png></a><a class=topbutton href="javascript:void(0);" onmousedown="slide('settings','email');" title="Adjust Settings"><img class="thumb" src=/images/2_settings.png></a><a class=topbutton href="javascript:void(0);" onmousedown="slide('email','settings');" title="Submit Feedback"><img class="thumb" src=/images/2_feedback.png></a><a class=topbutton target="_blank" href="http://www.twitter.com" title="GoTo Twitter"><img class="thumb" src=/images/2_twitterlogo.png></a></td>
+</tr>
+</table>
+</div>
+<div id=topspacer>&nbsp;</div>
+<table width="100%" align=center border=0 style="border:1px solid transparent;">
+<tr>
+<td align=left colspan=2 width="100%">
+<div id=status style="height:30px">
+<div id=inpbox style="height:99px; background-color:#fff;">
+<table border=0 cellpadding=0 cellspacing=0 width=100% style="padding:0; margin:0; background-color:transparent;">
+<tr>
+<td rowspan=2 align=left width="100%"><textarea tabindex=1 id=ta name="ta" onFocus="grow('g');" onMouseOut="limitText(this.form.ta,document.getElementById('countdown'),140,'','','');" onKeyDown="limitText(this.form.ta,document.getElementById('countdown'),140,event,'');" onKeyUp="limitText(this.form.ta,document.getElementById('countdown'),140,'','','');" oncontextmenu="shorten();" onmouseup="shorten(event);"></textarea>
+<div style="height:14px; padding:0; margin:0; overflow:hidden; width:77px; border:0; background-color:transparent;">
+ <img id=symm valign=bottom border=0 src=/images/symm_dd.png usemap="#symmedia">
+ <map name="symmedia">
+  <area shape="rect" coords="0,0,34,14" href="#" alt="Insert Symbols (alt+1)" title="Insert Symbols (alt+1)" onClick="return slide('tk');" />
+  <area shape="rect" coords="35,0,72,14" href="#" alt="Insert Media (alt+2)" title="Insert Media (alt+2)" onClick="return slide('tc');" />
+ </map>
+</div>
+</td>
+<td id=cnt align=right valign=top nowrap><div id=countdown name=countdown>140</div></td>
+</tr>
+<tr>
+<td align=right valign=middle id=snd nowrap><a title="Clear Tweet (alt+x)" href="javascript:void(0);" onclick="clearStatus();"><img border=0 src=/images/erase.png></a><br><a href="javascript:subtweet(140);" title="Submit [enter]"><img id=sbmbtn class="thumb" src=/images/send.png width=26></a></td>
+</tr>
+</table>
+</div>
+<div id="tk" class="tk" style="display:none; height:175px; width:250px;"><iframe src="symbols.html" frameborder=0 width="100%" height="175"></iframe></div>
+<div id="tc" class="tc" style="display:none; height:80px; width:250px;"><iframe src="/upload?gm=" frameborder=0 width="100%" height="80"></iframe></div>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="2" width="100%">
+<div class="tabsF">
+<ul>
+<li id="t1" class="current"><a href="javascript:processAJAX('gadget.asp','mycontent','1','1','','');" title="Home (ctrl+h)"><span>Home</span></a></li>
+<li id="t2" class="none"><a href="javascript:processAJAX('gadget.asp','mycontent','1','2','','');" title="Replies (ctrl+r)"><span>Replies</span></a></li>
+<li id="t3" class="none"><a href="javascript:processAJAX('gadget.asp','mycontent','1','3','','');" title="Directs (ctrl+d)"><span>Directs</span></a></li>
+<li id="t4" class="none"><a href="javascript:processAJAX('gadget.asp','mycontent','1','4','','');" title="Favorites (ctrl+f)"><span>Favorites</span></a></li>
+<li id="t5" class="none"><a href="javascript:processAJAX('gadget.asp','mycontent','1','5','','');" title="All (ctrl+e)"><span>Everyone</span></a></li>
+<li id="t6" class="none" style="display:none;"></li>
+<li id="t7" class="none" style="display:none;"></li>
+<li id="t8" class="none" style="display:none;"></li>
+<li id="t9" class="none" style="display:none;"></li>
+<li id="t10" class="none" style="display:none;"></li>
+<li id="t11" class="none" style="display:none;"></li>
+<li id="t12" class="none" style="display:none;"></li>
+</ul>
+<!--<div style="display:inline; float:right; cursor:pointer;" onClick="window.open('/keyboard_shortcuts.php');" alt="Features, Shortcuts and Tips" title="Features, Shortcuts and Tips"><img border=0 src=/images/help.png></div>-->
+<!--<div style="display:inline; float:right; cursor:pointer;" onClick="trends('trends','');" alt="Twitter Trends" title="Twitter Trends"><img border=0 src=/images/help.png></div>-->
+<div id=menu><span id=addsrch><a title="Save this search" href="javascript:void(0);" onclick="svSearch('?=$ghide?>');"><img id=svimg src=/images/icon_add.png border=0></a></span><a title="Options" id=arrow href="javascript:void(0);" onclick="display();"></a><div id=items class=items><a onblur="checkMenu();" id=first href="javascript:void(0);" onclick="trends('trends','');"><span title="View Trending Topics">&nbsp;Trending Topics</span></a><br><a href="javascript:void(0);" onclick="view_saved('');"><span title="View/Edit">&nbsp;Saved Searches</span></a><br><a href="javascript:void(0);" onClick="document.getElementById('items').style.display='none';showme();"><span title="User Statistics (ctrl+m)">&nbsp;User Statistics</span></a><br><a href="javascript:void(0);" onClick="document.getElementById('items').style.display='none';window.open('/keyboard_shortcuts.php');"><span title="Features, Shortcuts and Tips">&nbsp;Help</span></a></div></div>
+</div>
+<div onmouseup="options('',event);" id="mycontent" name="mycontent"><div id=confirm style="display:block; height:0px;"></div><table width="100%"><tr><td class=updated align=left colspan=2><div id=lupd name=lupd></div></td></tr><tr id=cldrw style='display:none;'><td colspan=2><div id=trends><ul id=cloud></ul></div></td></tr><tr class="tt1"><td  valign=middle onmouseover="showinfo(0,1,1,1);" onmouseout="hideinfo(0,'http://s.twimg.com/a/1255039715/images/default_profile_1_normal.png');"><map name=ekffyx0><area href="javascript:void(0);" onclick="rt('PDC21',0);" alt="ReTweet" title="ReTweet" shape="rect" coords="0,0,24,24"><area href="javascript:processAJAX('gadget.asp?fav=4888974993','mycontent','1','1','','');" alt="Add to Favorites" title="Add to Favorites" shape="rect" coords="25,0,48,24"><area target="_self" href="gadget.asp?md=4888974993&ghide=&scrm=9tXRH" alt="Delete" title="Delete" shape="rect" coords="0,25,24,48"><area href="javascript:processAJAX('gadget.asp','PDC21','1','8','','');" title="PDC21's archive" shape="rect" coords="25,25,48,48"></map><img id=thumb0 usemap="#ekffyx0" width=48 height=48 border=0 valign=middle src=http://s.twimg.com/a/1255039715/images/default_profile_1_normal.png></td><td valign=top  width="100%" class="tfall tf1"><div class=userinfo style="display:none; z-index:1000;" id=userinfo0><table class=info><tr><td align=right>Name:</td><td align=left>PDC21</td></tr><tr><td align=right>Location:</td><td align=left>N/A</td></tr><tr><td align=right>Description:</td><td align=left>N/A</td></tr><tr><td align=right>URL:</td><td align=left>N/A</td></tr><tr><td align=right>Followers:</td><td align=left>8</td></tr></table></div><a class=twt href='javascript:void(0);' onclick="replyTo('PDC21','4888974993','','0','1');" oncontextmenu="window.open('http://twitter.com/PDC21');" title="click to toggle between @ reply / direct message"><b>PDC21</b></a>: @<a class=twt title="skyeriquelme" href="javascript:processAJAX('gadget.asp','skyeriquelme','1','8','','')">skyeriquelme</a> test <span class=source><i>(<a class=twt target="_blank" href="http://twitter.com/PDC21/status/4888974993">about 1 hour ago</a> from <a class=twt target=_blank href="http://m.tweete.net/" rel="nofollow">Mobile Tweete</a>)</i></span><span style="display:none" id=tweet0>@skyeriquelme test</span></td></tr>
+<tr class="tt2"><td  valign=middle onmouseover="showinfo(1,1,1,1);" onmouseout="hideinfo(1,'http://s.twimg.com/a/1255039715/images/default_profile_1_normal.png');"><map name=ekffyx1><area href="javascript:void(0);" onclick="rt('PDC21',1);" alt="ReTweet" title="ReTweet" shape="rect" coords="0,0,24,24"><area href="javascript:processAJAX('gadget.asp?fav=4888958491','mycontent','1','1','','');" alt="Add to Favorites" title="Add to Favorites" shape="rect" coords="25,0,48,24"><area target="_self" href="gadget.asp?md=4888958491&ghide=&scrm=9tXRH" alt="Delete" title="Delete" shape="rect" coords="0,25,24,48"><area href="javascript:processAJAX('gadget.asp','PDC21','1','8','','');" title="PDC21's archive" shape="rect" coords="25,25,48,48"></map><img id=thumb1 usemap="#ekffyx1" width=48 height=48 border=0 valign=middle src=http://s.twimg.com/a/1255039715/images/default_profile_1_normal.png></td><td valign=top  width="100%" class="tfall tf2"><div class=userinfo style="display:none; z-index:1000;" id=userinfo1><table class=info><tr><td align=right>Name:</td><td align=left>PDC21</td></tr><tr><td align=right>Location:</td><td align=left>N/A</td></tr><tr><td align=right>Description:</td><td align=left>N/A</td></tr><tr><td align=right>URL:</td><td align=left>N/A</td></tr><tr><td align=right>Followers:</td><td align=left>8</td></tr></table></div><a class=twt href='javascript:void(0);' onclick="replyTo('PDC21','4888958491','','1','1');" oncontextmenu="window.open('http://twitter.com/PDC21');" title="click to toggle between @ reply / direct message"><b>PDC21</b></a>: testing <span class=source><i>(<a class=twt target="_blank" href="http://twitter.com/PDC21/status/4888958491">about 1 hour ago</a> from <a class=twt target=_blank href="http://m.tweete.net/" rel="nofollow">Mobile Tweete</a>)</i></span><span style="display:none" id=tweet1>testing</span></td></tr>
+</table><div style="display:none;" id=alert></div><div id=look style="display:none;"></div><div style="display:none;" id=newd></div></div>
+</td>
+</tr>
+<tr><td colspan=2 align=center><script type="text/javascript"><!--
+google_ad_client = "pub-4403005225044111"
+/* 234x60, created 2/22/09 */
+google_ad_language = "en";
+google_ad_slot = "1052458163";
+google_ad_width = 234;
+google_ad_height = 60;
+//-->
+</script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</td></tr></table>
+<input type="hidden" name="ghide" value="">
+<input type="hidden" name="tid" value="">
+<input type="hidden" name="sname" value="">
+<input type="hidden" name="ac" value="PDC21">
+</form>
+<br>
+<!--<div style="position: fixed; z-index: 9999; bottom: 0px; left: 0px; height: 25px; width: 100%; text-align: center; font-size: 14px; color: white; font-weight: normal; background-color: #ccc; border-top: 2px solid #eee; padding-left: 12px; padding-right: 12px; padding-top: 2px; font-family: Arial;">Google Ad Here</div>--> 
+<script>
+//Set automated refresh interval based on cookie value set at login, for searches, force tab in AJAX call, since no tab selected
+window.setInterval("processAJAX('gadget.asp','mycontent', '1','','','1')", 3 * 60 * 1000 );
+</script>
+<script type="text/javascript" src="http://trunc.it/TruncItAPI.448.js"></script>
+<script type="text/javascript" src="gadget2.448.js"></script>
+<script type="text/javascript" src="sm.448.js"></script>
+<script type="text/javascript" src="actb.448.js"></script>
+<script type="text/javascript" src="common.448.js"></script>
+<script type="text/javascript">
+var customarray=new Array('@PDC21');var acobj = actb(document.getElementById('ta'),customarray);function adjust()
+{
+  return true;
+}
+$(document).bind('keydown', 'ctrl+h',function(){processAJAX('gadget.asp','mycontent','1','1','',''); return false;});
+$(document).bind('keydown', 'ctrl+r',function(){processAJAX('gadget.asp','mycontent','1','2','',''); return false;});
+$(document).bind('keydown', 'ctrl+d',function(){processAJAX('gadget.asp','mycontent','1','3','',''); return false;});
+$(document).bind('keydown', 'ctrl+f',function(){processAJAX('gadget.asp','mycontent','1','4','',''); return false;});
+$(document).bind('keydown', 'ctrl+e',function(){processAJAX('gadget.asp','mycontent','1','5','',''); return false;});
+$(document).bind('keydown', 'ctrl+z',function(){processAJAX('gadget.asp','mycontent','1','','',''); return false;});
+$(document).bind('keydown', 'ctrl+m',function(){showme(); return false;});
+$(document).bind('keydown', 'alt+x',function(){clearStatus(); return false;});
+$(document).bind('keydown', 'alt+1',function(){slide('tk'); return false;});
+$(document).bind('keydown', 'alt+2',function(){slide('tc'); return false;});
+$(document).bind('keydown', 'alt+left',function(){prev(''); return false;});
+$(document).bind('keydown', 'alt+right',function(){next(''); return false;});
+$(document).bind('keydown', 'alt+0', function(){clearNew(); return false;});
+//these cannot be disabled, as this is the only way to access
+$(document).bind('keydown', 'ctrl+up',function(){slide('status'); return false;});
+$(document).bind('keydown', 'alt+up',function(){slide('status'); return false;});
+$(document).bind('keydown', 'ctrl+q',function(){tsearch('',''); return false;});
+$(document).bind('keydown', 'ctrl+y',function(){shorten(); return false;});
+
+//prepare soundmanager for new tweet audio alert
+soundManager.flashVersion = 8;
+soundManager.url = '/flash/';
+</script>
+<div id=page style="display:none;"></div>
+<div id=ggURL style="display:none;"></div>
+<div id=saved_trends style="display:none;"></div>
+<div id=curkey style="display:none;"></div>
+</body>
+</html>
